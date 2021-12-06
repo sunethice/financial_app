@@ -1,17 +1,20 @@
 
 import React from 'react'
 import AuthService from './Services/AuthService'
-import { Redirect, Route } from 'react-router-dom';
+import { Navigate } from 'react-router-dom';
 
-function PrivateRoute ({component: Component, authed, ...rest}) {
-    return (
-      <Route
-        {...rest}
-        render={(props) => authed === true
-          ? <Component {...props} />
-          : <Redirect to={{pathname: '/login', state: {from: props.location}}} />}
-      />
-    )
-}
+const PrivateRoute = (Component) => {
+    const cAuthService = new AuthService();
+    const AuthRoute = () => {
+      const isAuth = cAuthService.isLoggedIn();
+      if (isAuth) {
+        return <Component />;
+      } else {
+        return <Navigate to="/login" />;
+      }
+    };
+  
+    return AuthRoute;
+  };
 
 export default PrivateRoute;

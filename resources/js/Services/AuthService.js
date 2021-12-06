@@ -3,26 +3,12 @@ import Cookies from "js-cookie";
 
 class AuthService{
     signIn(credentials) {
-        return dispatch => {
-            axios
+        return axios
                 .post("/api/login", {
                     email: credentials.email,
                     password: credentials.password,
                     rememberMe: false
-                })
-                .then(res => {
-                    if (res.status == 200) {
-                        dispatch({ type: SIGNIN, payload: res.data });
-                    } else {
-                        notifyService.notify(
-                            res.data.message,
-                            notifyService.Notifications.Failure
-                        );
-                    }
-                })
-                .catch(function(err) {
                 });
-        };
     }
 
     signUp(pRegisterDetails) {

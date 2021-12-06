@@ -4,18 +4,21 @@ import AuthService from './Services/AuthService';
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Register from './Register';
 import Home from './Home';
+import Login from './Login';
+import PrivateRoute from './PrivateRoute';
 
 class Index extends Component {
-    render() {
-        // const isLoggedIn = AuthService.isLoggedIn();
+    constructor(){
+        super();
+    }
 
+    render() {
         return (
             <BrowserRouter>
                 <Routes>
                     <Route path="/" caseSensitive={false} element={<Home/>}></Route>
+                    <Route path="/login" caseSensitive={false} element={<Login/>}></Route>
                     <Route path="/register" caseSensitive={false} element={<Register/>}></Route>
-                    {/* <Route exact path="/login" component={Login}></Route> */}
-                    {/* <PrivateRoute authed={this.state.authed} path='/dashboard' component={Dashboard} /> */}
                 </Routes>
             </BrowserRouter>
         );
