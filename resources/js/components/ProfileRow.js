@@ -3,23 +3,7 @@ import React, { Component } from "react";
 class ProfileRow extends Component {
     constructor(props) {
         super(props);
-        this.state = {
-            withAction: 1, //0: Create, 1: Edit
-        };
-    }
-
-    OnEditClick() {
-        const { withAction } = this.state;
-        this.props.sliderfunc(
-            PackageActions,
-            this.props.packageItem,
-            withAction,
-            true
-        );
-    }
-
-    OnDeleteClick() {
-        const { withAction } = this.state;
+        this.state = {};
     }
 
     render() {

@@ -1,9 +1,9 @@
 import React, { Component } from "react";
 import FinanceService from "../Services/FinanceService";
 import Swal from 'sweetalert2';
-import ProfileRow from "./ProfileRow";
+import QuoteRow from "./QuoteRow";
 
-class ProfileTbl extends Component {
+class QuoteTbl extends Component {
     
     constructor(props) {
         super(props);
@@ -19,23 +19,25 @@ class ProfileTbl extends Component {
                         <table className="table table-sm">
                             <thead>
                                 <tr className="table-secondary">
-                                    <td>Company Name</td>
-                                    <td>CEO</td>
-                                    <td>CUSIP</td>
-                                    <td>DCF</td>
-                                    <td>DCF Diff</td>
-                                    <td>exchange</td>
-                                    <td>exchange shortname</td>
+                                    <td>Name</td>
+                                    <td>Symbol</td>
+                                    <td>Price</td>
+                                    <td>Day High</td>
+                                    <td>Day Low</td>
+                                    <td>Year High</td>
+                                    <td>Year Low</td>
                                     <td>Market Capital</td>
-                                    <td>Sector</td>
+                                    <td>EPS</td>
                                 </tr>
                             </thead>
                             <tbody>
-                                {this.props.company_profile !== undefined && this.props.company_profile !== null ? (
-                                        <ProfileRow
-                                            key={0}
-                                            profile={this.props.company_profile[0]}
-                                        ></ProfileRow>
+                                {this.props.company_quotes && this.props.company_quotes.length != 0 ? (
+                                    this.props.company_quotes.map(item => (
+                                        <QuoteRow
+                                            key={item.symbol}
+                                            quote={item}
+                                        ></QuoteRow>
+                                    ))
                                 ) : (
                                     <tr>
                                         <td className="text-center" colSpan="9">
@@ -51,4 +53,4 @@ class ProfileTbl extends Component {
         );
     }
 }
-export default ProfileTbl;
+export default QuoteTbl;
