@@ -7115,7 +7115,7 @@ var Home = /*#__PURE__*/function (_Component) {
           }
         })["catch"](function (err) {
           // if(err.status === 401){
-          this.setState({
+          _this2.setState({
             redirectTo: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_7__.Navigate, {
               to: "/login"
             })
@@ -7128,6 +7128,7 @@ var Home = /*#__PURE__*/function (_Component) {
           //         type: 'error'
           //     });
           // }
+
         })["finally"](function () {
           _this2.setState({
             profileLoading: false
@@ -7170,7 +7171,7 @@ var Home = /*#__PURE__*/function (_Component) {
           }
         })["catch"](function (err) {
           // if(err.status === 401){
-          this.setState({
+          _this3.setState({
             redirectTo: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_7__.Navigate, {
               to: "/login"
             })
@@ -7183,6 +7184,7 @@ var Home = /*#__PURE__*/function (_Component) {
           //     type: 'error'
           // });
           // }
+
         })["finally"](function () {
           _this3.setState({
             quoteLoading: false
