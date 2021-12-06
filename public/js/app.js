@@ -7530,7 +7530,7 @@ var Login = /*#__PURE__*/function (_Component) {
                 mResponse = _context.sent;
 
                 if (mResponse.status == 200) {
-                  expireTime = new Date(new Date().getTime() + 1 * 60 * 1000);
+                  expireTime = new Date(new Date().getTime() + 15 * 60 * 1000);
                   js_cookie__WEBPACK_IMPORTED_MODULE_3__["default"].set('access_token', mResponse.data.access_token, {
                     expires: expireTime
                   });

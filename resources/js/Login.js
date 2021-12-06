@@ -28,7 +28,7 @@ class Login extends Component{
         try{
             const mResponse = await authService.signIn(mRegisterDetails);
             if (mResponse.status == 200) {
-                var expireTime = new Date(new Date().getTime() + 1 * 60 * 1000);
+                var expireTime = new Date(new Date().getTime() + 15 * 60 * 1000);
                 Cookies.set('access_token',mResponse.data.access_token,{
                     expires: expireTime
                 });
