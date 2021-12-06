@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import AuthService from './Services/AuthService';
-import { Redirect } from "react-router";
+import { Navigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import "../css/register.css";
 
@@ -25,25 +25,26 @@ class Register extends Component{
             name,email,password,password_confirmation
         }
         try{
-            // const mResponse = await authService.signUp(mRegisterDetails);
-            // if (mResponse.status == 200) {
-            //     Swal.fire({
-            //         title: 'Sign up successful',
-            //         text: mResponse.data,
-            //         type: 'success'
-            //     });
-            this.props.history.push("/")
+            const mResponse = await authService.signUp(mRegisterDetails);
+            if (mResponse.status == 200) {
+                Swal.fire({
+                    title: 'Sign up successful',
+                    text: mResponse.data,
+                    type: 'success',
+                    timer: 2000
+                });
                 setTimeout(() => {
-                    this.props.history.push("/login")
+                    this.setState({redirectTo:<Navigate to="/login" />});
                 }, 4000);
-            // } else {
+            } else {
                 
-            // }
+            }
         }catch(err){
             Swal.fire({
                 title: 'Sign up unsuccessful',
                 text: err.message,
                 type: 'warning',
+                timer: 2000,
             
             });
         }
@@ -147,7 +148,7 @@ class Register extends Component{
                         </div>
                     </form>
                 </div>
-                <Redirect to={redirectTo} />
+                {redirectTo}
             </div>);
     };
 }
