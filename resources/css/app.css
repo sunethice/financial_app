@@ -5,5 +5,14 @@
 }
 
 .form-wrap{
+    min-width: 700px;
+}
+
+.form-wrap-2{
     min-width: 500px;
+}
+
+.loading{
+    padding-top: 8PX;
+    margin-left: -30px;
 }

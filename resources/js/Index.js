@@ -6,6 +6,7 @@ import Register from './Register';
 import Home from './Home';
 import Login from './Login';
 import PrivateRoute from './PrivateRoute';
+import "../css/app.css";
 
 class Index extends Component {
     constructor(){

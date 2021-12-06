@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import AuthService from './Services/AuthService';
 import { Navigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
-import "../css/register.css";
 
 class Register extends Component{
     constructor(){
@@ -58,7 +57,7 @@ class Register extends Component{
                     <div className="col-12">Sign Up</div>
                 </div>
                 <div className="form-container">
-                    <form className="form-wrap">
+                    <form className="form-wrap-2">
                         <div className="form-row mb-3">
                             <div className="col">
                                 <input

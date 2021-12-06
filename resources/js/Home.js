@@ -14,7 +14,9 @@ class Home extends Component{
             result:null,
             resultQuotes:null,
             companyName:"",
-            companyNames:[]
+            companyNames:[],
+            profileLoading :false,
+            quoteLoading:false
         }
     }
 
@@ -25,6 +27,7 @@ class Home extends Component{
                 if (res.status == 200) {
                     this.setState({
                         result: res.data.pResultObj,
+                        profileLoading:false
                     });
                 } else {
                     Swal.fire({
@@ -69,6 +72,7 @@ class Home extends Component{
                     console.log("res.data.pResultObj",res.data.pResultObj)
                     this.setState({
                         resultQuotes: res.data.pResultObj,
+                        quoteLoading: false
                     });
                 } else {
                     Swal.fire({
@@ -98,7 +102,7 @@ class Home extends Component{
     }
 
     render() {
-        const {companyName, result, resultQuotes} = this.state;
+        const {companyName, result, resultQuotes,profileLoading,quoteLoading} = this.state;
         const options = [
             { value: 'AAPL', label: 'AAPL' },
             { value: 'FB', label: 'FB' },
@@ -113,7 +117,7 @@ class Home extends Component{
                 <div className="form-container">
                     <div className="form-wrap">
                         <div className="row no-gutters mb-3">
-                            <div className="col-10">
+                            <div className="col-8">
                                 <input
                                     type="text"
                                     value={companyName}
@@ -124,17 +128,21 @@ class Home extends Component{
                                     }
                                 />
                             </div>
-                            <div className="col-2">
+                            <div className="col-3">
                                 <button
                                     type="submit"
                                     className="btn btn-warning"
                                     onClick={event => {
+                                        this.setState({
+                                            profileLoading:true
+                                        });
                                         this.fetchProfile(event);
                                     }}
                                 >
-                                    Search
+                                    Search Profile
                                 </button>
                             </div>
+                            {profileLoading ? <div className="col-1 loading">Loading...</div>:null}
                         </div>
                     </div>
                 </div>
@@ -157,17 +165,21 @@ class Home extends Component{
                                     }}
                                 />
                             </div>
-                            <div className="col-4">
+                            <div className="col-3">
                                 <button
                                     type="submit"
                                     className="btn btn-warning"
                                     onClick={event => {
+                                        this.setState({
+                                            quoteLoading:true
+                                        });
                                         this.fetchQuote(event);
                                     }}
                                 >
                                     Search Quote
                                 </button>
                             </div>
+                            {quoteLoading ? <div className="col-1 loading" style={{display:`$`}}>Loading...</div>:null}
                         </div>
                     </div>
                 </div>

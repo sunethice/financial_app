@@ -3,7 +3,7 @@ import AuthService from './Services/AuthService';
 import { Navigate } from 'react-router-dom';
 import Cookies from "js-cookie";
 import Swal from 'sweetalert2';
-import "../css/register.css";
+// import "../css/register.css";
 
 class Login extends Component{
     constructor(){
@@ -59,7 +59,7 @@ class Login extends Component{
                     <div className="col-12">Sign In</div>
                 </div>
                 <div className="form-container">
-                    <form className="form-wrap">
+                    <form className="form-wrap-2">
                         <div className="form-row mb-3">
                             <div className="col">
                                 <input
