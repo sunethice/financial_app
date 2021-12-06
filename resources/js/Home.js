@@ -26,8 +26,7 @@ class Home extends Component{
             mFinanceService.getProfile(companyName).then((res) => {
                 if (res.status == 200) {
                     this.setState({
-                        result: res.data.pResultObj,
-                        profileLoading:false
+                        result: res.data.pResultObj
                     });
                 } else {
                     Swal.fire({
@@ -44,6 +43,10 @@ class Home extends Component{
                     text: err.message,
                     timer: 2000,
                     type: 'error'
+                });
+            }).finally(()=>{
+                this.setState({
+                    profileLoading:false
                 });
             });
         }
@@ -65,14 +68,12 @@ class Home extends Component{
             compNames.push(element.value);
         }); 
 
-        console.log("compNames",compNames);
         if(companyNames.length !== 0){
             mFinanceService.getQuotes(compNames).then((res) => {
                 if (res.status == 200) {
                     console.log("res.data.pResultObj",res.data.pResultObj)
                     this.setState({
                         resultQuotes: res.data.pResultObj,
-                        quoteLoading: false
                     });
                 } else {
                     Swal.fire({
@@ -89,6 +90,10 @@ class Home extends Component{
                     text: err.message,
                     timer: 2000,
                     type: 'error'
+                });
+            }).finally(()=>{
+                this.setState({
+                    quoteLoading:false
                 });
             });
         }

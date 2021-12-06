@@ -1,10 +1,14 @@
 <?php
-    namespace App\Http\Services;
 
+namespace App\Http\Services;
+
+use App\Http\Traits\HBRedisTrait;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
 
 class FinancialService implements IFinancialService{
+
+        use HBRedisTrait;
         private $cAPIKey = "78de4df1615ab8800334cffa51cdedee";
 
         public function __construct()
@@ -12,18 +16,34 @@ class FinancialService implements IFinancialService{
         }
 
         public function cpGetCompanyProfile(string $pCompanyName){
-            //profile/AAPL?apikey=YOUR_API_KEY
-            $response = $this->cpSendApiRequest("profile/".$pCompanyName, 'get');
-            return $response->json();
+            $mKey = "Profile_".strtolower($pCompanyName);
+            $response = null;
+            if($this->cpKeyExists($mKey)){
+                $response = json_decode($this->cpGetCachedDetails($mKey));
+            }
+            else{
+                $response = $this->cpSendApiRequest("profile/".$pCompanyName, 'get');
+                $this->cpCacheDetails($mKey,json_encode($response->json()));
+                $response = $response->json();
+            }
+            return $response;
         }
 
         public function cpGetCompanyQuote(array $pCompanyNames){
-            //quote/AAPL?apikey=YOUR_API_KEY
             $mCompanyNames = array_reduce($pCompanyNames,function($val,$current){
                 return $val.",".$current;
             },"");
-            $response = $this->cpSendApiRequest("quote/".$mCompanyNames, 'get');
-            return $response->json();
+            $mKey = "Quote".strtolower($mCompanyNames);
+            $response = null;
+            if($this->cpKeyExists($mKey)){
+                $response = json_decode($this->cpGetCachedDetails($mKey));
+            }
+            else{
+                $response = $this->cpSendApiRequest("quote/".$mCompanyNames, 'get');
+                $this->cpCacheDetails($mKey,json_encode($response->json()));
+                $response = $response->json();
+            }
+            return $response;
         }
 
         public function cpSendApiRequest($pPath, $pRequestType)

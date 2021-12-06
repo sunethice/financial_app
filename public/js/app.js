@@ -7100,8 +7100,7 @@ var Home = /*#__PURE__*/function (_Component) {
         mFinanceService.getProfile(companyName).then(function (res) {
           if (res.status == 200) {
             _this2.setState({
-              result: res.data.pResultObj,
-              profileLoading: false
+              result: res.data.pResultObj
             });
           } else {
             sweetalert2__WEBPACK_IMPORTED_MODULE_1___default().fire({
@@ -7117,6 +7116,10 @@ var Home = /*#__PURE__*/function (_Component) {
             text: err.message,
             timer: 2000,
             type: 'error'
+          });
+        })["finally"](function () {
+          _this2.setState({
+            profileLoading: false
           });
         });
       } else {
@@ -7140,7 +7143,6 @@ var Home = /*#__PURE__*/function (_Component) {
         console.log("element", element.value);
         compNames.push(element.value);
       });
-      console.log("compNames", compNames);
 
       if (companyNames.length !== 0) {
         mFinanceService.getQuotes(compNames).then(function (res) {
@@ -7148,8 +7150,7 @@ var Home = /*#__PURE__*/function (_Component) {
             console.log("res.data.pResultObj", res.data.pResultObj);
 
             _this3.setState({
-              resultQuotes: res.data.pResultObj,
-              quoteLoading: false
+              resultQuotes: res.data.pResultObj
             });
           } else {
             sweetalert2__WEBPACK_IMPORTED_MODULE_1___default().fire({
@@ -7165,6 +7166,10 @@ var Home = /*#__PURE__*/function (_Component) {
             text: err.message,
             timer: 2000,
             type: 'error'
+          });
+        })["finally"](function () {
+          _this3.setState({
+            quoteLoading: false
           });
         });
       } else {
