@@ -39,12 +39,15 @@ class Register extends Component{
                 
             }
         }catch(err){
+            let errText = err.message;
+            if(err.status == 422){
+                errText = "Please check the details inserted."
+            }
             Swal.fire({
                 title: 'Sign up unsuccessful',
-                text: err.message,
+                text: "Please check the details inserted.",
                 type: 'warning',
                 timer: 2000,
-            
             });
         }
     }

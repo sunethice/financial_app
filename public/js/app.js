@@ -7029,8 +7029,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _components_ProfileTbl__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./components/ProfileTbl */ "./resources/js/components/ProfileTbl.js");
 /* harmony import */ var _PrivateRoute__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./PrivateRoute */ "./resources/js/PrivateRoute.js");
 /* harmony import */ var _Services_FinanceService__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./Services/FinanceService */ "./resources/js/Services/FinanceService.js");
-/* harmony import */ var react_select__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! react-select */ "./node_modules/react-select/dist/react-select.esm.js");
+/* harmony import */ var react_select__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! react-select */ "./node_modules/react-select/dist/react-select.esm.js");
 /* harmony import */ var _components_QuoteTbl__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./components/QuoteTbl */ "./resources/js/components/QuoteTbl.js");
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router/index.js");
 /* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
@@ -7064,6 +7065,7 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
 
 
 
+
 var Home = /*#__PURE__*/function (_Component) {
   _inherits(Home, _Component);
 
@@ -7082,7 +7084,8 @@ var Home = /*#__PURE__*/function (_Component) {
       companyName: "",
       companyNames: [],
       profileLoading: false,
-      quoteLoading: false
+      quoteLoading: false,
+      redirectTo: null
     };
     return _this;
   }
@@ -7111,12 +7114,20 @@ var Home = /*#__PURE__*/function (_Component) {
             });
           }
         })["catch"](function (err) {
-          sweetalert2__WEBPACK_IMPORTED_MODULE_1___default().fire({
-            title: 'Encountered Error',
-            text: err.message,
-            timer: 2000,
-            type: 'error'
-          });
+          // if(err.status === 401){
+          this.setState({
+            redirectTo: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_7__.Navigate, {
+              to: "/login"
+            })
+          }); // }
+          // else{
+          //     Swal.fire({
+          //         title: 'Encountered Error',
+          //         text: err.message,
+          //         timer: 2000,
+          //         type: 'error'
+          //     });
+          // }
         })["finally"](function () {
           _this2.setState({
             profileLoading: false
@@ -7140,15 +7151,12 @@ var Home = /*#__PURE__*/function (_Component) {
           companyNames = _this$state2.companyNames;
       var compNames = [];
       companyNames.forEach(function (element) {
-        console.log("element", element.value);
         compNames.push(element.value);
       });
 
       if (companyNames.length !== 0) {
         mFinanceService.getQuotes(compNames).then(function (res) {
           if (res.status == 200) {
-            console.log("res.data.pResultObj", res.data.pResultObj);
-
             _this3.setState({
               resultQuotes: res.data.pResultObj
             });
@@ -7161,12 +7169,20 @@ var Home = /*#__PURE__*/function (_Component) {
             });
           }
         })["catch"](function (err) {
-          sweetalert2__WEBPACK_IMPORTED_MODULE_1___default().fire({
-            title: 'Encountered Error',
-            text: err.message,
-            timer: 2000,
-            type: 'error'
-          });
+          // if(err.status === 401){
+          this.setState({
+            redirectTo: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_7__.Navigate, {
+              to: "/login"
+            })
+          }); // }
+          // else{
+          // Swal.fire({
+          //     title: 'Encountered Error',
+          //     text: err.message,
+          //     timer: 2000,
+          //     type: 'error'
+          // });
+          // }
         })["finally"](function () {
           _this3.setState({
             quoteLoading: false
@@ -7190,7 +7206,8 @@ var Home = /*#__PURE__*/function (_Component) {
           result = _this$state3.result,
           resultQuotes = _this$state3.resultQuotes,
           profileLoading = _this$state3.profileLoading,
-          quoteLoading = _this$state3.quoteLoading;
+          quoteLoading = _this$state3.quoteLoading,
+          redirectTo = _this$state3.redirectTo;
       var options = [{
         value: 'AAPL',
         label: 'AAPL'
@@ -7264,7 +7281,7 @@ var Home = /*#__PURE__*/function (_Component) {
               className: "row no-gutters mb-3",
               children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("div", {
                 className: "col-8",
-                children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(react_select__WEBPACK_IMPORTED_MODULE_7__["default"], {
+                children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(react_select__WEBPACK_IMPORTED_MODULE_8__["default"], {
                   isMulti: true,
                   name: "companies",
                   options: options,
@@ -7301,7 +7318,7 @@ var Home = /*#__PURE__*/function (_Component) {
           })
         }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_components_QuoteTbl__WEBPACK_IMPORTED_MODULE_5__["default"], {
           company_quotes: resultQuotes
-        })]
+        }), redirectTo]
       });
     }
   }]);
@@ -7490,7 +7507,7 @@ var Login = /*#__PURE__*/function (_Component) {
     key: "onSigninClick",
     value: function () {
       var _onSigninClick = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee(event) {
-        var _this$state, authService, email, password, mRegisterDetails, mResponse, expireTime;
+        var _this$state, authService, email, password, mRegisterDetails, mResponse, expireTime, errText;
 
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee$(_context) {
           while (1) {
@@ -7511,7 +7528,7 @@ var Login = /*#__PURE__*/function (_Component) {
                 mResponse = _context.sent;
 
                 if (mResponse.status == 200) {
-                  expireTime = new Date(new Date().getTime() + 60 * 60 * 1000);
+                  expireTime = new Date(new Date().getTime() + 1 * 60 * 1000);
                   js_cookie__WEBPACK_IMPORTED_MODULE_3__["default"].set('access_token', mResponse.data.access_token, {
                     expires: expireTime
                   });
@@ -7529,20 +7546,26 @@ var Login = /*#__PURE__*/function (_Component) {
                   });
                 }
 
-                _context.next = 14;
+                _context.next = 16;
                 break;
 
               case 11:
                 _context.prev = 11;
                 _context.t0 = _context["catch"](4);
+                errText = _context.t0.message;
+
+                if (_context.t0.response.status == 422) {
+                  errText = "Credentials are wrong.";
+                }
+
                 sweetalert2__WEBPACK_IMPORTED_MODULE_4___default().fire({
-                  title: 'Sign up unsuccessful',
-                  text: _context.t0.message,
+                  title: 'Sign in unsuccessful',
+                  text: "Credentials are wrong.",
                   type: 'warning',
                   timer: 2000
                 });
 
-              case 14:
+              case 16:
               case "end":
                 return _context.stop();
             }
@@ -7786,7 +7809,7 @@ var Register = /*#__PURE__*/function (_Component) {
       var _onSignupClick = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee(event) {
         var _this2 = this;
 
-        var _this$state, authService, name, email, password, password_confirmation, mRegisterDetails, mResponse;
+        var _this$state, authService, name, email, password, password_confirmation, mRegisterDetails, mResponse, errText;
 
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee$(_context) {
           while (1) {
@@ -7824,20 +7847,26 @@ var Register = /*#__PURE__*/function (_Component) {
                   }, 4000);
                 } else {}
 
-                _context.next = 14;
+                _context.next = 16;
                 break;
 
               case 11:
                 _context.prev = 11;
                 _context.t0 = _context["catch"](4);
+                errText = _context.t0.message;
+
+                if (_context.t0.status == 422) {
+                  errText = "Please check the details inserted.";
+                }
+
                 sweetalert2__WEBPACK_IMPORTED_MODULE_3___default().fire({
                   title: 'Sign up unsuccessful',
-                  text: _context.t0.message,
+                  text: "Please check the details inserted.",
                   type: 'warning',
                   timer: 2000
                 });
 
-              case 14:
+              case 16:
               case "end":
                 return _context.stop();
             }

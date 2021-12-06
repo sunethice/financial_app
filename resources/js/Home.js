@@ -5,6 +5,7 @@ import PrivateRoute from './PrivateRoute';
 import FinanceService from './Services/FinanceService';
 import Select from 'react-select';
 import QuoteTbl from './components/QuoteTbl';
+import { Navigate } from 'react-router-dom';
 
 class Home extends Component{
     constructor(){
@@ -16,7 +17,8 @@ class Home extends Component{
             companyName:"",
             companyNames:[],
             profileLoading :false,
-            quoteLoading:false
+            quoteLoading:false,
+            redirectTo: null
         }
     }
 
@@ -28,7 +30,8 @@ class Home extends Component{
                     this.setState({
                         result: res.data.pResultObj
                     });
-                } else {
+                }
+                else {
                     Swal.fire({
                         title: 'Unsuccessful',
                         text: res.data.message,
@@ -38,12 +41,17 @@ class Home extends Component{
                 }
             })
             .catch(function (err) {
-                Swal.fire({
-                    title: 'Encountered Error',
-                    text: err.message,
-                    timer: 2000,
-                    type: 'error'
-                });
+                // if(err.status === 401){
+                    this.setState({redirectTo:<Navigate to="/login" />});
+                // }
+                // else{
+                //     Swal.fire({
+                //         title: 'Encountered Error',
+                //         text: err.message,
+                //         timer: 2000,
+                //         type: 'error'
+                //     });
+                // }
             }).finally(()=>{
                 this.setState({
                     profileLoading:false
@@ -64,18 +72,17 @@ class Home extends Component{
 
         let compNames = [];
         companyNames.forEach(element => {
-            console.log("element",element.value)
             compNames.push(element.value);
         }); 
 
         if(companyNames.length !== 0){
             mFinanceService.getQuotes(compNames).then((res) => {
                 if (res.status == 200) {
-                    console.log("res.data.pResultObj",res.data.pResultObj)
                     this.setState({
                         resultQuotes: res.data.pResultObj,
                     });
-                } else {
+                }
+                else {
                     Swal.fire({
                         title: 'Unsuccessful',
                         text: res.data.message,
@@ -85,12 +92,17 @@ class Home extends Component{
                 }
             })
             .catch(function (err) {
-                Swal.fire({
-                    title: 'Encountered Error',
-                    text: err.message,
-                    timer: 2000,
-                    type: 'error'
-                });
+                // if(err.status === 401){
+                    this.setState({redirectTo:<Navigate to="/login" />});
+                // }
+                // else{
+                    // Swal.fire({
+                    //     title: 'Encountered Error',
+                    //     text: err.message,
+                    //     timer: 2000,
+                    //     type: 'error'
+                    // });
+                // }
             }).finally(()=>{
                 this.setState({
                     quoteLoading:false
@@ -107,7 +119,7 @@ class Home extends Component{
     }
 
     render() {
-        const {companyName, result, resultQuotes,profileLoading,quoteLoading} = this.state;
+        const {companyName, result, resultQuotes,profileLoading,quoteLoading,redirectTo} = this.state;
         const options = [
             { value: 'AAPL', label: 'AAPL' },
             { value: 'FB', label: 'FB' },
@@ -189,6 +201,7 @@ class Home extends Component{
                     </div>
                 </div>
                 <QuoteTbl company_quotes={resultQuotes}></QuoteTbl>
+                {redirectTo}
             </div>
         );
     };

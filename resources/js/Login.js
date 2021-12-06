@@ -28,7 +28,7 @@ class Login extends Component{
         try{
             const mResponse = await authService.signIn(mRegisterDetails);
             if (mResponse.status == 200) {
-                var expireTime = new Date(new Date().getTime() + 60 * 60 * 1000);
+                var expireTime = new Date(new Date().getTime() + 1 * 60 * 1000);
                 Cookies.set('access_token',mResponse.data.access_token,{
                     expires: expireTime
                 });
@@ -42,9 +42,13 @@ class Login extends Component{
                 });
             }
         }catch(err){
+            let errText = err.message;
+            if(err.response.status == 422){
+                errText = "Credentials are wrong."
+            }
             Swal.fire({
-                title: 'Sign up unsuccessful',
-                text: err.message,
+                title: 'Sign in unsuccessful',
+                text: "Credentials are wrong.",
                 type: 'warning',
                 timer: 2000
             });
