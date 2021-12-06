@@ -40,7 +40,7 @@ class Home extends Component{
                     });
                 }
             })
-            .catch(function (err) {
+            .catch((err) => {
                 // if(err.status === 401){
                     this.setState({redirectTo:<Navigate to="/login" />});
                 // }
@@ -91,7 +91,7 @@ class Home extends Component{
                     });
                 }
             })
-            .catch(function (err) {
+            .catch( (err) => {
                 // if(err.status === 401){
                     this.setState({redirectTo:<Navigate to="/login" />});
                 // }
